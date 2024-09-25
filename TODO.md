@@ -1,6 +1,6 @@
 # API task list:
 
-- Test update
+- Test pokemon updates
 
 ## Backlog:
 

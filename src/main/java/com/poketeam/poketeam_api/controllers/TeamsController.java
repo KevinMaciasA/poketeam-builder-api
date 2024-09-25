@@ -56,10 +56,8 @@ public class TeamsController {
   @PostMapping
   public ResponseEntity<TeamData> postTeam(@Valid @RequestBody TeamRequest teamRequest, UriComponentsBuilder uri) {
     List<Pokemon> pokemons = new ArrayList<>();
-    System.out.println(teamRequest.name());
     for (Pokemon pokemon : teamRequest.pokemons()) {
       var maybePokemon = pokemonsRepository.findById(pokemon.getId());
-      System.out.println(maybePokemon);
       if (maybePokemon.isPresent())
         pokemons.add(maybePokemon.get());
       else {
@@ -79,8 +77,9 @@ public class TeamsController {
   @PatchMapping(path = "/{id}")
   public ResponseEntity<?> updateTeam(@PathVariable Integer id, @RequestBody UpdateRequest updateRequest,
       UriComponentsBuilder uri) {
-    if (teamsRepository.existsById(id)) {
-      var team = teamsRepository.getReferenceById(id);
+    var maybeTeam = teamsRepository.findById(id);
+    if (maybeTeam.isPresent()) {
+      var team = maybeTeam.get();
       team.update(updateRequest);
       return ResponseEntity.ok(team);
     }
