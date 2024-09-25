@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: poketeam-api
+  datasource:
+    url: jdbc:mysql://localhost/poketeam_api?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
