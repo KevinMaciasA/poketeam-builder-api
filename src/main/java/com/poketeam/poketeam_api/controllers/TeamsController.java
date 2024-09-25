@@ -1,5 +1,6 @@
 package com.poketeam.poketeam_api.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,17 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.poketeam.poketeam_api.models.Pokemon;
 import com.poketeam.poketeam_api.models.Team;
 import com.poketeam.poketeam_api.models.dtos.TeamData;
 import com.poketeam.poketeam_api.requests.TeamRequest;
 import com.poketeam.poketeam_api.requests.UpdateRequest;
+import com.poketeam.poketeam_api.respositories.PokemonsRepository;
 import com.poketeam.poketeam_api.respositories.TeamsRepository;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/teams")
 public class TeamsController {
   @Autowired
   TeamsRepository teamsRepository;
+  @Autowired
+  PokemonsRepository pokemonsRepository;
 
   @GetMapping
   public ResponseEntity<List<Team>> getAllTeams() {
@@ -47,8 +54,21 @@ public class TeamsController {
   }
 
   @PostMapping
-  public ResponseEntity<TeamData> postTeam(@RequestBody TeamRequest teamRequest, UriComponentsBuilder uri) {
-    var newTeam = new Team(teamRequest.pokemons());
+  public ResponseEntity<TeamData> postTeam(@Valid @RequestBody TeamRequest teamRequest, UriComponentsBuilder uri) {
+    List<Pokemon> pokemons = new ArrayList<>();
+    System.out.println(teamRequest.name());
+    for (Pokemon pokemon : teamRequest.pokemons()) {
+      var maybePokemon = pokemonsRepository.findById(pokemon.getId());
+      System.out.println(maybePokemon);
+      if (maybePokemon.isPresent())
+        pokemons.add(maybePokemon.get());
+      else {
+        pokemonsRepository.save(pokemon);
+        pokemons.add(pokemon);
+      }
+    }
+
+    var newTeam = new Team(teamRequest.name(), pokemons);
     var result = teamsRepository.save(newTeam);
     var path = uri.path("teams/{id}").buildAndExpand(result.getId()).toUri();
     return ResponseEntity

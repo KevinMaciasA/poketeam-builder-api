@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.poketeam.poketeam_api.models.Pokemon;
 
-public record TeamRequest(String name, List<Pokemon> pokemons) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public record TeamRequest(@NotBlank String name, @NotNull @Size(min = 1, max = 6) List<Pokemon> pokemons) {
 
 }

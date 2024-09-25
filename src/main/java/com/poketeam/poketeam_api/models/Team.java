@@ -36,11 +36,12 @@ public class Team {
   private Integer id;
   @Column(length = 255)
   private String name;
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
   @JoinTable(name = "team_pokemons", joinColumns = @JoinColumn(name = "team_id"), inverseJoinColumns = @JoinColumn(name = "pokemon_id"))
   private List<Pokemon> pokemons;
   @Column(nullable = false, updatable = false)
   private LocalDateTime createdAt;
+  @Column(nullable = true)
   private LocalDateTime updatedAt;
 
   @PrePersist
@@ -53,8 +54,10 @@ public class Team {
     this.updatedAt = LocalDateTime.now();
   }
 
-  public Team(List<Pokemon> pokemons) {
+  public Team(String name, List<Pokemon> pokemons) {
+    this.name = name;
     this.pokemons = pokemons;
+    this.createdAt = LocalDateTime.now();
   }
 
   public void update(UpdateRequest updateRequest) {
