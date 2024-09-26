@@ -81,6 +81,7 @@ public class TeamsController {
     if (maybeTeam.isPresent()) {
       var team = maybeTeam.get();
       team.update(updateRequest);
+      teamsRepository.save(team);
       return ResponseEntity.ok(team);
     }
 
