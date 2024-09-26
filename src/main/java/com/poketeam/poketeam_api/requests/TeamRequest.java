@@ -8,6 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record TeamRequest(@NotBlank String name, @NotNull @Size(min = 1, max = 6) List<Pokemon> pokemons) {
+public record TeamRequest(@NotBlank String name, @NotNull @Size(min = 0, max = 6) List<Pokemon> pokemons) {
 
 }
