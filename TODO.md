@@ -4,4 +4,4 @@
 
 ## Backlog:
 
-- Check if pokemos are unique
+- Check if pokemons are unique
