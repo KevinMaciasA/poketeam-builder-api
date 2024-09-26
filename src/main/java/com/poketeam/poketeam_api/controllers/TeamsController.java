@@ -54,7 +54,7 @@ public class TeamsController {
   }
 
   @PostMapping
-  public ResponseEntity<TeamData> postTeam(@Valid @RequestBody TeamRequest teamRequest, UriComponentsBuilder uri) {
+  public ResponseEntity<Team> postTeam(@Valid @RequestBody TeamRequest teamRequest, UriComponentsBuilder uri) {
     List<Pokemon> pokemons = new ArrayList<>();
     for (Pokemon pokemon : teamRequest.pokemons()) {
       var maybePokemon = pokemonsRepository.findById(pokemon.getId());
@@ -71,7 +71,7 @@ public class TeamsController {
     var path = uri.path("teams/{id}").buildAndExpand(result.getId()).toUri();
     return ResponseEntity
         .created(path)
-        .body(result.data());
+        .body(result);
   }
 
   @PatchMapping(path = "/{id}")
