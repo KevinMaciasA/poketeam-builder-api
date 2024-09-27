@@ -58,6 +58,7 @@ public class Team {
     this.name = name;
     this.pokemons = pokemons;
     this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
   }
 
   public void update(UpdateRequest updateRequest) {

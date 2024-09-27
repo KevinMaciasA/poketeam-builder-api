@@ -19,7 +19,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.poketeam.poketeam_api.models.Pokemon;
 import com.poketeam.poketeam_api.models.Team;
-import com.poketeam.poketeam_api.models.dtos.TeamData;
 import com.poketeam.poketeam_api.requests.TeamRequest;
 import com.poketeam.poketeam_api.requests.UpdateRequest;
 import com.poketeam.poketeam_api.respositories.PokemonsRepository;
@@ -38,7 +37,7 @@ public class TeamsController {
   @GetMapping
   public ResponseEntity<List<Team>> getAllTeams() {
     List<Team> allTeams = teamsRepository
-        .findAll();
+        .findAllByOrderByUpdatedAtDesc();
 
     return ResponseEntity.ok(allTeams);
   }
