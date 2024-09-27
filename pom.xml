@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.poketeam</groupId>
 	<artifactId>poketeam-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>poketeam-api</name>
 	<description>Poke-Team API</description>
 	<url/>
