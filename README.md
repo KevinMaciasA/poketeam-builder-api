@@ -25,7 +25,7 @@ Update the application.yaml file with your MySQL database credentials:
 cd src/main/resources
 ```
 
-Sample `application.yaml``
+Sample `application.yaml`
 
 ```yaml
 spring:
